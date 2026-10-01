@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1585,6 +1585,25 @@
             position: relative;
             z-index: 9999;
         }
+        .treat-card {
+            overflow: hidden;
+        }
+
+        .treat-gallery-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .treat-gallery-image {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+        }
        
     </style>
 </head>
@@ -1679,12 +1698,12 @@
                         </div>
                         <p class="section-intro reveal">From elegant and delicate to fun and over-the-top, Dip and Drizzle creations are designed for the moment when someone opens the box and says, “Wait... you made these?”</p>
                     </div>
-                    <div class="treat-grid">
-                        <article class="treat-card reveal"><a href="menu.jpg" target="_blank" rel="noopener noreferrer" class="treat-menu-link"><img src="menu.jpg" alt="Dip and Drizzle Treat Co. menu" class="treat-menu-image"></a></article>
-                        <article class="treat-card reveal"><div class="treat-card-content"><h3>Cake Pops</h3><p>Little bites of happiness</p></div></article>
-                        <article class="treat-card reveal"><div class="treat-card-content"><h3>Sweet Details</h3><p>Drizzles • Sprinkles • Magic</p></div></article>
-                        <article class="treat-card reveal"><div class="treat-card-content"><h3>Chocolate Everything</h3><p>Classic • Elegant • Irresistible</p></div></article>
-                        <article class="treat-card reveal"><div class="treat-card-content"><h3>Specialty Creations</h3><p>Made specifically for you</p></div></article>
+                    <div class="treat-grid" id="gallery-grid">
+                        <article class="treat-card reveal">
+                            <a href="menu.jpg" target="_blank" rel="noopener noreferrer" class="treat-menu-link">
+                                <img src="menu.jpg" alt="Dip and Drizzle Treat Co. menu" class="treat-menu-image">
+                            </a>
+                        </article>
                     </div>
                 </div>
             </section>
@@ -1832,7 +1851,126 @@
 
     </div>
 
+    <script>
+    const GALLERY_CAPTIONS = [
+        "Little bites of happiness",
+        "Drizzles • Sprinkles • Magic",
+        "Classic • Elegant • Irresistible",
+        "Made specifically for you",
 
+        "Sweet moments in every bite",
+        "Handcrafted with a little extra love",
+        "Dipped, drizzled, and ready to delight",
+        "A little sweetness goes a long way",
+        "Made to make your celebration sweeter",
+        "Pretty enough to display, delicious enough to disappear",
+        "Sweet treats for every special moment",
+        "Created with care from start to finish",
+        "The perfect little finishing touch",
+        "Freshly made for your sweetest occasions",
+        "Thoughtfully crafted and beautifully finished",
+        "Small treats, big smiles",
+        "Celebration-ready and made with love",
+        "Sweet details made just for you",
+        "A delicious little moment worth savoring",
+        "Because every celebration deserves something sweet"
+    ];
+
+    async function loadGallery() {
+        const galleryGrid = document.getElementById("gallery-grid");
+
+        try {
+            const response = await fetch("gallery/");
+
+            if (!response.ok) {
+                throw new Error("Gallery directory could not be loaded.");
+            }
+
+            const html = await response.text();
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+
+            const allowedExtensions = /\.(jpg|jpeg|png|gif|webp|avif)$/i;
+
+            const photos = [...doc.querySelectorAll("a")]
+                .map(link => link.getAttribute("href"))
+                .filter(href => {
+                    if (!href) return false;
+
+                    const cleanHref = href.split("?")[0].split("#")[0];
+
+                    if (cleanHref.includes("/")) return false;
+
+                    return allowedExtensions.test(cleanHref);
+                })
+                .map(href => decodeURIComponent(href.split("/").pop()))
+                .filter((filename, index, array) => array.indexOf(filename) === index);
+
+            photos.sort((a, b) =>
+                a.localeCompare(b, undefined, {
+                    numeric: true,
+                    sensitivity: "base"
+                })
+            );
+
+            photos.forEach((filename, index) => {
+                const displayName = filename
+                    .replace(/\.[^/.]+$/, "")
+                    .replace(/_/g, " ")
+                    .replace(/-/g, " ")
+                    .replace(/\s+/g, " ")
+                    .trim();
+
+                const caption = GALLERY_CAPTIONS[index % GALLERY_CAPTIONS.length];
+
+                const article = document.createElement("article");
+                article.className = "treat-card reveal";
+
+                const link = document.createElement("a");
+                link.href = "gallery/" + encodeURIComponent(filename);
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.className = "treat-gallery-link";
+
+                const image = document.createElement("img");
+                image.src = "gallery/" + encodeURIComponent(filename);
+                image.alt = displayName;
+                image.className = "treat-gallery-image";
+                image.loading = "lazy";
+
+                const content = document.createElement("div");
+                content.className = "treat-card-content";
+
+                const heading = document.createElement("h3");
+                heading.textContent = displayName;
+
+                const paragraph = document.createElement("p");
+                paragraph.textContent = caption;
+
+                link.appendChild(image);
+                content.appendChild(heading);
+                content.appendChild(paragraph);
+
+                article.appendChild(link);
+                article.appendChild(content);
+
+                galleryGrid.appendChild(article);
+
+                if (typeof revealObserver !== "undefined") {
+                    revealObserver.observe(article);
+                } else {
+                    article.classList.add("visible");
+                }
+            });
+
+        } catch (error) {
+            console.error("Could not load gallery:", error);
+        }
+    }
+
+    loadGallery();
+    </script>
     <script>
         const menuBtn=document.getElementById("menuBtn"),navLinks=document.getElementById("navLinks");
         menuBtn?.addEventListener("click",()=>navLinks.classList.toggle("open"));
