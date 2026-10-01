@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1585,6 +1585,12 @@
             position: relative;
             z-index: 9999;
         }
+        .testimonials .section-label,
+        .testimonials .section-title,
+        .testimonials .quote-wrap {
+            position: relative;
+            z-index: 9999;
+        }
         .treat-card {
             overflow: hidden;
         }
@@ -1603,12 +1609,6 @@
             height: 100%;
             object-fit: cover;
             object-position: center center;
-        }
-        .testimonials .section-label,
-        .testimonials .section-title,
-        .testimonials .quote-wrap {
-            position: relative;
-            z-index: 9999;
         }
        
     </style>
@@ -1858,6 +1858,20 @@
     </div>
 
     <script>
+    const GALLERY_FILES = [
+        "Apple_Cider_-_Carmell_Apple.jpg",
+        "Bride_and_Groom.jpeg",
+        "Cake_Pops.jpg",
+        "Chocolate_Covered_Cookies.jpeg",
+        "Cholotate_Covered_Oreos.jpeg",
+        "Cookies_and_Cream.jpg",
+        "Cosmic_Brownie_-_Fruity_Pebbles.jpg",
+        "Holiday_Themed_Treats.jpg",
+        "Ice_Cream_Flavored_Cakesicles.jpg",
+        "Strawberry_Shortcake.jpg",
+        "Wedding_Treats.jpeg"
+    ];
+
     const GALLERY_CAPTIONS = [
         "Little bites of happiness",
         "Drizzles • Sprinkles • Magic",
@@ -1882,101 +1896,64 @@
         "Because every celebration deserves something sweet"
     ];
 
-    async function loadGallery() {
+    function loadGallery() {
         const galleryGrid = document.getElementById("gallery-grid");
 
-        try {
-            const response = await fetch("gallery/");
+        if (!galleryGrid) return;
 
-            if (!response.ok) {
-                throw new Error("Gallery directory could not be loaded.");
+        GALLERY_FILES.forEach((filename, index) => {
+            const displayName = filename
+                .replace(/\.[^/.]+$/, "")
+                .replace(/_/g, " ")
+                .replace(/-/g, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+
+            const caption = GALLERY_CAPTIONS[index % GALLERY_CAPTIONS.length];
+
+            const article = document.createElement("article");
+            article.className = "treat-card reveal";
+
+            const link = document.createElement("a");
+            link.href = "gallery/" + encodeURIComponent(filename);
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.className = "treat-gallery-link";
+
+            const image = document.createElement("img");
+            image.src = "gallery/" + encodeURIComponent(filename);
+            image.alt = displayName;
+            image.className = "treat-gallery-image";
+            image.loading = "lazy";
+
+            const content = document.createElement("div");
+            content.className = "treat-card-content";
+
+            const heading = document.createElement("h3");
+            heading.textContent = displayName;
+
+            const paragraph = document.createElement("p");
+            paragraph.textContent = caption;
+
+            link.appendChild(image);
+            content.appendChild(heading);
+            content.appendChild(paragraph);
+
+            article.appendChild(link);
+            article.appendChild(content);
+
+            galleryGrid.appendChild(article);
+
+            if (typeof revealObserver !== "undefined") {
+                revealObserver.observe(article);
+            } else {
+                article.classList.add("visible");
             }
-
-            const html = await response.text();
-
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-
-            const allowedExtensions = /\.(jpg|jpeg|png|gif|webp|avif)$/i;
-
-            const photos = [...doc.querySelectorAll("a")]
-                .map(link => link.getAttribute("href"))
-                .filter(href => {
-                    if (!href) return false;
-
-                    const cleanHref = href.split("?")[0].split("#")[0];
-
-                    if (cleanHref.includes("/")) return false;
-
-                    return allowedExtensions.test(cleanHref);
-                })
-                .map(href => decodeURIComponent(href.split("/").pop()))
-                .filter((filename, index, array) => array.indexOf(filename) === index);
-
-            photos.sort((a, b) =>
-                a.localeCompare(b, undefined, {
-                    numeric: true,
-                    sensitivity: "base"
-                })
-            );
-
-            photos.forEach((filename, index) => {
-                const displayName = filename
-                    .replace(/\.[^/.]+$/, "")
-                    .replace(/_/g, " ")
-                    .replace(/-/g, " ")
-                    .replace(/\s+/g, " ")
-                    .trim();
-
-                const caption = GALLERY_CAPTIONS[index % GALLERY_CAPTIONS.length];
-
-                const article = document.createElement("article");
-                article.className = "treat-card reveal";
-
-                const link = document.createElement("a");
-                link.href = "gallery/" + encodeURIComponent(filename);
-                link.target = "_blank";
-                link.rel = "noopener noreferrer";
-                link.className = "treat-gallery-link";
-
-                const image = document.createElement("img");
-                image.src = "gallery/" + encodeURIComponent(filename);
-                image.alt = displayName;
-                image.className = "treat-gallery-image";
-                image.loading = "lazy";
-
-                const content = document.createElement("div");
-                content.className = "treat-card-content";
-
-                const heading = document.createElement("h3");
-                heading.textContent = displayName;
-
-                const paragraph = document.createElement("p");
-                paragraph.textContent = caption;
-
-                link.appendChild(image);
-                content.appendChild(heading);
-                content.appendChild(paragraph);
-
-                article.appendChild(link);
-                article.appendChild(content);
-
-                galleryGrid.appendChild(article);
-
-                if (typeof revealObserver !== "undefined") {
-                    revealObserver.observe(article);
-                } else {
-                    article.classList.add("visible");
-                }
-            });
-
-        } catch (error) {
-            console.error("Could not load gallery:", error);
-        }
+        });
     }
 
     loadGallery();
-    </script>
+</script>
     <script>
         const menuBtn=document.getElementById("menuBtn"),navLinks=document.getElementById("navLinks");
         menuBtn?.addEventListener("click",()=>navLinks.classList.toggle("open"));
