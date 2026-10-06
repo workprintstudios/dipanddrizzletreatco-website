@@ -373,7 +373,8 @@
 
         .hero-logo {
             position: relative;
-            left: 50%;
+            z-index: 9999;
+            left: 60%;
             top: 25%;
             width: min(300px,22vw);
             height: auto;
@@ -404,9 +405,8 @@
 
         .hero-content {
             position: relative;
-            z-index: 3;
+            z-index: 9999;
             width: 52%;
-            
         }
 
         .hero-eyebrow {
@@ -418,7 +418,9 @@
             letter-spacing: 4px;
             font-size: 12px;
             font-weight: 900;
-            margin-bottom: 22px
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 9999;
         }
 
             .hero-eyebrow span {
@@ -432,7 +434,9 @@
             font-weight: 400;
             font-size: clamp(58px,7.78vw,112px);
             line-height: .86;
-            letter-spacing: clamp(-6px,-.42vw,-3px)
+            letter-spacing: clamp(-6px,-.42vw,-3px);
+            position: relative;
+            z-index: 9999;
         }
 
             .hero h1 em {
@@ -446,13 +450,17 @@
             color: var(--muted);
             line-height: 1.8;
             margin: 30px 0;
-            font-size: 17px
+            font-size: 17px;
+            position: relative;
+            z-index: 9999;
         }
 
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px
+            gap: 12px;
+            position: relative;
+            z-index: 9999;
         }
 
         .hero-art {
@@ -559,35 +567,43 @@
             background: var(--chocolate);
             color: #fff;
             padding: 19px 0;
-            white-space: nowrap
+            white-space: nowrap;
         }
 
         .marquee-track {
-            display: inline-flex;
+            display: flex;
+            width: max-content;
             align-items: center;
-            gap: 30px;
-            animation: marquee 28s linear infinite
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-group {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
         }
 
         .marquee-item {
             text-transform: uppercase;
             letter-spacing: 4px;
             font-size: 11px;
-            font-weight: 800
+            font-weight: 800;
+            margin-right: 30px;
         }
 
         .marquee-dot {
             color: var(--rose);
-            font-size: 20px
+            font-size: 20px;
+            margin-right: 30px;
         }
 
         @keyframes marquee {
             from {
-                transform: translateX(0)
+                transform: translateX(0);
             }
 
             to {
-                transform: translateX(-50%)
+                transform: translateX(-50%);
             }
         }
 
@@ -1297,7 +1313,7 @@
                 max-width: 700px;
                 padding-top: 60px;
                 text-align: center;
-                z-index: 5
+                z-index: 9999
             }
 
             .hero-eyebrow,
@@ -1631,9 +1647,10 @@
 
         .floating-drip {
             position: relative;
-            left: 0;
-            
-            width: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(100%, var(--site-width));
+            height: 0;
             z-index: 10;
             pointer-events: none;
         }
@@ -1667,9 +1684,9 @@
             background: var(--chocolate);
             color: #fff;
             text-align: center;
-            padding: 10px 20px;
-            font-size: 11px;
-            letter-spacing: 2px;
+            padding: 5px 20px;
+            font-size: 10px;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
 
@@ -1712,13 +1729,13 @@
 </head>
 
 <body>
-    
 
-   
+
+
 
     <div class="site">
         <div class="top-bar">
-        ✦ Freshly dipped • Hand decorated • Drizzled with love ✦
+            Fresh dipped ✦ Hand decorated ✦ Drizzled with love
         </div>
 
 
@@ -1770,14 +1787,29 @@
 
             <div class="marquee">
                 <div class="marquee-track">
-                    <span class="marquee-item">Chocolate Covered Strawberries</span><span class="marquee-dot">✦</span>
-                    <span class="marquee-item">Cake Pops</span><span class="marquee-dot">✦</span>
-                    <span class="marquee-item">Chocolate Pretzles</span><span class="marquee-dot">✦</span>
-                    <span class="marquee-item">Custom Treats</span><span class="marquee-dot">✦</span>
-                    <span class="marquee-item">Crispy Treats</span><span class="marquee-dot">✦</span>
-                    <span class="marquee-item">Chololate Covered Oreos</span><span class="marquee-dot">✦</span>
-                    <span class="marquee-item">Specialty Creations</span><span class="marquee-dot">✦</span>
-                    <span class="marquee-item">Chocolate Covered Everything</span><span class="marquee-dot">✦</span>
+
+                    <div class="marquee-group">
+                        <span class="marquee-item">Chocolate Covered Strawberries</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Cake Pops</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Chocolate Pretzles</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Custom Treats</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Crispy Treats</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Chocolate Covered Oreos</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Specialty Creations</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Chocolate Covered Everything</span><span class="marquee-dot">✦</span>
+                    </div>
+
+                    <div class="marquee-group">
+                        <span class="marquee-item">Chocolate Covered Strawberries</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Cake Pops</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Chocolate Pretzles</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Custom Treats</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Crispy Treats</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Chocolate Covered Oreos</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Specialty Creations</span><span class="marquee-dot">✦</span>
+                        <span class="marquee-item">Chocolate Covered Everything</span><span class="marquee-dot">✦</span>
+                    </div>
+
                 </div>
             </div>
 
@@ -1986,7 +2018,7 @@
                         <a href="#top">Back to Top ↑</a>
                     </div>
 
-                  
+
 
                 </div>
 
@@ -2015,17 +2047,17 @@
 
     <script>
         const GALLERY_FILES = [
-            "Apple_Cider_-_Caramel_Apple.jpg",
-            "Bride_and_Groom.jpeg",
-            "Cake_Pops.jpg",
-            "Chocolate_Covered_Oreos.jpeg",
-            "Cookies_and_Cream.jpg",
-            "Cosmic_Brownie_-_Fruity_Pebbles.jpg",
-            "Holiday_Themed_Treats.jpg",
-            "Ice_Cream_Flavored_Cakesicles.jpg",
-            "Many_More_Flavors_ -_Just_Ask.jpg",
-            "Strawberry_Shortcake.jpg",
-            "Wedding_Treats.jpeg"
+        "Apple_Cider_-_Caramel_Apple.jpg",
+        "Bride_and_Groom.jpeg",
+        "Cake_Pops.jpg",
+        "Chocolate_Covered_Oreos.jpeg",
+        "Cookies_and_Cream.jpg",
+        "Cosmic_Brownie_-_Fruity_Pebbles.jpg",
+        "Holiday_Themed_Treats.jpg",
+        "Ice_Cream_Flavored_Cakesicles.jpg",
+        "Many_More_Flavors_ -_Just_Ask.jpg",
+        "Strawberry_Shortcake.jpg",
+        "Wedding_Treats.jpeg"
         ];
 
         const GALLERY_CAPTIONS = [
@@ -2134,7 +2166,7 @@
         document.getElementById("year").textContent=year;
         document.getElementById("yeary").textContent=year;
 
-       
+
         document.querySelectorAll(".btn").forEach(button=>{
         button.addEventListener("mouseenter",()=>button.style.letterSpacing=".7px");
         button.addEventListener("mouseleave",()=>button.style.letterSpacing=".3px");
