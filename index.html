@@ -374,11 +374,11 @@
         .hero-logo {
             position: relative;
             z-index: 9999;
-            left: 60%;
-            top: 25%;
+            left: 45%;
+            top: 40%;
             width: min(300px,22vw);
             height: auto;
-            z-index: 10;
+            z-index: 9999;
             object-fit: contain
         }
 
@@ -408,6 +408,10 @@
             z-index: 9999;
             width: 52%;
         }
+
+            .hero-content.reveal.visible {
+                transform: translateY(33vh);
+            }
 
         .hero-eyebrow {
             display: flex;
@@ -1273,7 +1277,51 @@
             color: rgba(255,255,255,.35);
             font-size: 10px
         }
+        @media (max-width:1376px) {
+            .hero-content {
+                width: 50%
+            }
 
+            .hero-art {
+                width: 50%
+            }
+
+            .experience-layout,
+            .custom-layout {
+                gap: 50px
+            }
+            .hero-content {
+                width: 100%;
+                max-width: 700px;
+                padding-top: 35px;
+                text-align: center;
+                z-index: 9999
+            }
+            .hero-logo {
+                position: relative;
+                z-index: 9999;
+                left: 65%;
+                top: 20%;
+                width: min(300px,22vw);
+                height: auto;
+                z-index: 9999;
+                object-fit: contain
+            }
+
+                .hero-content.reveal.visible {
+                    transform: translateY(6vh);
+                }
+            .process-grid {
+                grid-template-columns: repeat(2,1fr)
+            }
+
+            .hero-content {
+                position: relative;
+                z-index: 9999;
+                width: 52%;
+                transform: translateY(3vh);
+            }
+        }
         @media (max-width:1100px) {
             .hero-content {
                 width: 50%
@@ -1287,10 +1335,33 @@
             .custom-layout {
                 gap: 50px
             }
+            
 
+                .hero-content.reveal.visible {
+                    transform: translateY(7vh);
+                }
             .process-grid {
                 grid-template-columns: repeat(2,1fr)
             }
+            .hero-content {
+                position: relative;
+                z-index: 9999;
+                width: 52%;
+                transform: translateY(3vh);
+            }
+            .hero-logo {
+                position: relative;
+                z-index: 9999;
+                left: 40%;
+                top: 35%;
+                width: min(300px,22vw);
+                height: auto;
+                z-index: 9999;
+                object-fit: contain
+            }
+
+
+
         }
 
         @media (max-width:900px) {
@@ -1304,18 +1375,20 @@
 
             .hero {
                 min-height: 800px;
-                padding: 140px 24px 100px;
+                padding: 0px 24px 20px;
                 align-items: flex-start
             }
 
             .hero-content {
                 width: 100%;
                 max-width: 700px;
-                padding-top: 60px;
+                padding-top: 10px;
                 text-align: center;
                 z-index: 9999
             }
-
+                .hero-content.reveal.visible {
+                    transform: translateY(3vh);
+                }
             .hero-eyebrow,
             .hero-buttons {
                 justify-content: center
@@ -1342,7 +1415,14 @@
             }
 
             .hero-logo {
-                width: min(300px,35vw)
+                position: relative;
+                z-index: 9999;
+                left: 65%;
+                top: 25%;
+                width: min(300px,35vw);
+                height: auto;
+                z-index: 9999;
+                object-fit: contain
             }
 
             .intro-grid,
