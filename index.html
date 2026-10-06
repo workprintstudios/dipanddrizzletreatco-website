@@ -1805,6 +1805,19 @@
             object-fit: cover;
             object-position: center center;
         }
+        @media (min-width: 901px) {
+            .hero {
+                min-height: 1050px;
+            }
+
+            .hero-content {
+                position: relative;
+                min-height: 650px;
+            }
+            .hero-content.reveal.visible {
+                transform: translateY(25vh);
+            }
+        }
     </style>
 </head>
 
