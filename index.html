@@ -1712,13 +1712,14 @@
 </head>
 
 <body>
-    <div class="top-bar">
-        ✦ Freshly dipped • Hand decorated • Drizzled with love ✦
-    </div>
+    
 
    
 
     <div class="site">
+        <div class="top-bar">
+        ✦ Freshly dipped • Hand decorated • Drizzled with love ✦
+        </div>
 
 
         <header>
@@ -2133,12 +2134,7 @@
         document.getElementById("year").textContent=year;
         document.getElementById("yeary").textContent=year;
 
-        const heroArt=document.querySelector(".hero-art");
-        window.addEventListener("scroll",()=>{
-        const scrollY=window.scrollY;
-        if(scrollY<900)heroArt.style.transform=`translateY(calc(-45% + ${scrollY*.08}px))`;
-        });
-
+       
         document.querySelectorAll(".btn").forEach(button=>{
         button.addEventListener("mouseenter",()=>button.style.letterSpacing=".7px");
         button.addEventListener("mouseleave",()=>button.style.letterSpacing=".3px");
