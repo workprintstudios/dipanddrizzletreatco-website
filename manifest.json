@@ -1,0 +1,20 @@
+{
+  "name": "Dip and Drizzle Treat Co.",
+  "short_name": "Dip & Drizzle",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff9f2",
+  "theme_color": "#fff9f2",
+  "icons": [
+    {
+      "src": "logo_colorful.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo_colorful.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
